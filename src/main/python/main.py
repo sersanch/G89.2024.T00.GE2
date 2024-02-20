@@ -3,7 +3,6 @@
 
 from UC3MTravel import HotelManager
 
-
 def main():
     mng = HotelManager()
     res = mng.ReaddatafromJSOn("test.json")
@@ -14,3 +13,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
