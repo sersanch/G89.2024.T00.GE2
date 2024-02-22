@@ -10,7 +10,7 @@ def main():
     """
     Gets json input with booking data and sends data for validation...
     """
-    mng = src.main.python.UC3MTravel.HotelManager()
+    mng = src.main.python.uc3mtravel.HotelManager()
     res = mng.read_data_from_json("test.json")
     str_res = str(res)
     print(str_res)
