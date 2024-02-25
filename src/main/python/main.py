@@ -11,11 +11,8 @@ def main():
     Gets json input with booking data and sends data for validation...
     """
     mng = src.main.python.uc3mtravel.HotelManager()
-    res = mng.read_data_from_json("test.json")
-    str_res = str(res)
-    print(str_res)
-    print("CreditCard: " + res.creditcard)
-    print(res.localizer)
+    res = mng.room_reservation("./data/bookings/booking_01.json")
+    print(str(res))
 
 
 if __name__ == "__main__":

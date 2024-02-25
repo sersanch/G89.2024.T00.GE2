@@ -6,22 +6,14 @@ from datetime import datetime
 class HotelReservation:
     """ Class that manages the operations for hotel booking transactions... """
 
-    def __init__(self, id_card, credit_card_number, name_surname, phone_number, room_type, num_days):
-        """ Constructor of a hotel reservation...
-        :param id_card: personal id card number
-        :param credit_card_number: credit card number used for the booking
-        :param name_surname: name and surname of the visitor
-        :param phone_number: phone number of the visitor
-        :param room_type: room type (single, double, suite)
-        :param num_days: number of nights for the stay
-        """
+    def __init__(self, id_card, credit_card_number, name_surname, phone_number, room_type, arrival, num_days):
+        """ Constructor of a hotel reservation... """
         self.__credit_card_number = credit_card_number
         self.__id_card = id_card
-        justnow = datetime.utcnow()
-        self.__arrival = datetime.timestamp(justnow)
         self.__name_surname = name_surname
         self.__phone_number = phone_number
         self.__room_type = room_type
+        self.__arrival = arrival
         self.__num_days = num_days
 
     def __str__(self):
@@ -33,6 +25,7 @@ class HotelReservation:
                      "phone_number:": self.__phone_number,
                      "arrival_date": self.__arrival,
                      "num_days": self.__num_days,
+                     "arrival": self.__arrival,
                      "room_type": self.__room_type,
                      }
         return "HotelReservation:" + json_info.__str__()
