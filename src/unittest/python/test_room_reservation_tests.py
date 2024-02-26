@@ -20,12 +20,12 @@ class TestRoomReservation(TestCase):
         # Load all tests...
         try:
             with open(self.__path_tests + "f1_test_credit_card_number.json", encoding='UTF-8', mode="r") as f:
-                data_credit_card = json.load(f)
+                test_data_credit_card = json.load(f)
         except FileNotFoundError as e:
             raise HotelManagementException("Wrong file or file path") from e
         except json.JSONDecodeError:
-            data_credit_card = []
-        self.__data_credit_card = data_credit_card
+            test_data_credit_card = []
+        self.__test_data_credit_card = test_data_credit_card
 
         # Clear the bookings file from possible previous runs...
         all_bookings = self.__path_data + "/all_bookings.json"
@@ -35,7 +35,7 @@ class TestRoomReservation(TestCase):
 
     def test_credit_card_number_tc1(self):
         """ TestCase: TC1 - Expected OK. Checks localizer OK + Booking is stored """
-        for input_data in self.__data_credit_card:
+        for input_data in self.__test_data_credit_card:
             if input_data["idTest"] == "TC1":
                 hm = HotelManager()
                 localizer = hm.room_reservation(input_data["creditCardNumber"], input_data["idCard"],
