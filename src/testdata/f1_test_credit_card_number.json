@@ -1,0 +1,52 @@
+[
+{
+  "idTest": "TC1",
+  "creditCardNumber": "5555555555554444",
+  "idCard": "12345678Z",
+  "nameSurname": "JOSE LOPEZ",
+  "phoneNumber": "911234567",
+  "roomType": "SINGLE",
+  "arrival": "14/06/2024",
+  "numDays": "2"
+},
+{
+  "idTest": "TC2",
+  "creditCardNumber": "5555555555554440",
+  "idCard": "12345678Z",
+  "nameSurname": "JOSE LOPEZ",
+  "phoneNumber": "911234567",
+  "roomType": "SINGLE",
+  "arrival": "14/06/2024",
+  "numDays": "2"
+},
+{
+  "idTest": "TC3",
+  "creditCardNumber": "5555555555554440",
+  "idCard": "12345678Z",
+  "nameSurname": "JOSE LOPEZ",
+  "phoneNumber": "911234567",
+  "roomType": "SINGLE",
+  "arrival": "14/06/2024",
+  "numDays": "2"
+},
+{
+  "idTest": "TC4",
+  "creditCardNumber": "5555555555554440",
+  "idCard": "12345678Z",
+  "nameSurname": "JOSE LOPEZ",
+  "phoneNumber": "911234567",
+  "roomType": "SINGLE",
+  "arrival": "14/06/2024",
+  "numDays": "2"
+},
+{
+  "idTest": "TC5",
+  "creditCardNumber": "5555555555554440",
+  "idCard": "12345678Z",
+  "nameSurname": "JOSE LOPEZ",
+  "phoneNumber": "911234567",
+  "roomType": "SINGLE",
+  "arrival": "14/06/2024",
+  "numDays": "2"
+}
+]

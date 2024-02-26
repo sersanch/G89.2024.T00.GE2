@@ -52,3 +52,14 @@ class HotelReservation:
     def localizer(self):
         """ Returns the md5 signature """
         return hashlib.md5(str().encode()).hexdigest()
+
+    @property
+    def json(self):
+        return {"creditCardNumber": self.__credit_card_number,
+                "idCard": self.__id_card,
+                "nameSurname": self.__name_surname,
+                "phoneNumber:": self.__phone_number,
+                "roomType": self.__room_type,
+                "arrival": self.__arrival,
+                "numDays": self.__num_days,
+                }
