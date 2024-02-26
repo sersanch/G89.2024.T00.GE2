@@ -1,0 +1,13 @@
+astroid==3.0.3
+colorama==0.4.6
+dill==0.3.8
+isort==5.13.2
+luhn==0.2.0
+mccabe==0.7.0
+platformdirs==4.2.0
+pybuilder==0.13.11
+pybuilder-pylint-extended==1.1.0
+pylint==3.0.3
+tomli==2.0.1
+tomlkit==0.12.3
+typing_extensions==4.9.0
