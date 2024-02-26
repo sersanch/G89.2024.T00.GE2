@@ -1,6 +1,7 @@
 """ Main module to manage hotel operations. Includes the exposed methods... """
 import json
 import re
+import os
 from datetime import datetime
 from pathlib import Path
 import luhn
@@ -12,7 +13,7 @@ class HotelManager:
     """ Main class to manage hotel operations. Includes the exposed methods... """
 
     def __init__(self):
-        pass
+        self.__path_data = str(Path.home()) + "/PycharmProjects/G89.2024.T00.GE2/src/data/"
 
     def read_data_from_json(self, fi, mode):
         """ Opens input json file with data of the booking, checks formats and returns data... """
@@ -75,26 +76,6 @@ class HotelManager:
         """ Validates the arrival date. A value between 1 and 10 """
         return str(num_days).isdigit() and (1 <= int(num_days) <= 10)
 
-    def new_booking_from_json(self, fi):
-        """ Gets a new booking file to process and calls room reservation with inside data... """
-
-        # Get data from json file...
-        new_booking_data = self.read_data_from_json(fi, "r")
-
-        # Get each of the attributes...
-        try:
-            credit_card = new_booking_data["creditCardNumber"]
-            id_card = new_booking_data["idCard"]
-            name_surname = new_booking_data["nameSurname"]
-            phone_number = new_booking_data["phoneNumber"]
-            room_type = new_booking_data["roomType"]
-            arrival = new_booking_data["arrival"]
-            num_days = new_booking_data["numDays"]
-        except KeyError as e:
-            raise HotelManagementException("JSON Decode Error - Invalid JSON Key") from e
-
-        return self.room_reservation(credit_card, id_card, name_surname, phone_number, room_type, arrival, num_days)
-
     def room_reservation(self, credit_card, id_card, name_surname, phone_number, room_type, arrival, num_days):
         """ HM-FR-01: Register a room reservation. Receive booking info and return a code to enter the room """
 
@@ -119,14 +100,17 @@ class HotelManager:
                                        room_type=room_type, arrival=arrival, num_days=num_days)
 
         # Get localizer and store information of reservation in reservations file for further processing...
-        # Before saving to the file we check that the client does not have another booking...
 
         booking_data = reservation.json
         booking_data["localizer"] = reservation.localizer
 
-        path_file_bookings = str(Path.home()) + "/PycharmProjects/G89.2024.T00.GE2/src/data/bookings/all_bookings.json"
+        # Save to bookings file. Before saving to the file we check that the client does not have another booking...
 
-        all_bookings = self.read_data_from_json(path_file_bookings, "r")
+        path_file_bookings = self.__path_data + "all_bookings.json"
+
+        all_bookings = []
+        if os.path.isfile(path_file_bookings):
+            all_bookings = self.read_data_from_json(path_file_bookings, "r")
 
         for booking in all_bookings:
             if booking["idCard"] == booking_data["idCard"]:
