@@ -51,7 +51,7 @@ class HotelReservation:
     @property
     def localizer(self):
         """ Returns the md5 signature """
-        return hashlib.md5(str().encode()).hexdigest()
+        return hashlib.md5(self.__str__().encode()).hexdigest()
 
     @property
     def json(self):
