@@ -36,8 +36,8 @@ class TestRoomReservation(TestCase):
                        TC10 - Expected OK. Checks Room Type value DOUBLE. Localizer OK + Booking is stored
                        TC11 - Expected OK. Checks Room Type value SUITE. Localizer OK + Booking is stored """
         for input_data in self.__test_data_credit_card:
-            with self.subTest():
-                if input_data["idTest"] in ("TC1", "TC10", "TC11"):
+            if input_data["idTest"] in ("TC1", "TC10", "TC11"):
+                with self.subTest(input_data["idTest"]):
                     print("Executing: " + input_data["idTest"])
                     hm = HotelManager()
                     localizer = hm.room_reservation(input_data["creditCardNumber"], input_data["idCard"],
@@ -83,8 +83,8 @@ class TestRoomReservation(TestCase):
                        TC19 - Expected KO. Card Number incorrect length.
                        TC20 - Expected KO. Card Number is not a number. """
         for input_data in self.__test_data_credit_card:
-            with self.subTest():
-                if input_data["idTest"] not in ("TC1", "TC10", "TC11"):
+            if input_data["idTest"] not in ("TC1", "TC10", "TC11"):
+                with self.subTest(input_data["idTest"]):
                     print("Executing: " + input_data["idTest"])
                     hm = HotelManager()
                     with self.assertRaises(HotelManagementException) as result:

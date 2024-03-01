@@ -87,7 +87,7 @@ class HotelManager:
 
     def validate_id_card(self, id_card):
         """ Validates an id according to Spanish identity cards (N.I.F. algorithm). Uses python-stdnum library """
-        if not es.nif.is_valid(id_card):
+        if not  es.nif.is_valid(id_card):
             raise HotelManagementException("Invalid ID Card provided. Must be valid Spanish NIF document")
 
     def room_reservation(self, credit_card, id_card, name_surname, phone_number, room_type, arrival, num_days):
