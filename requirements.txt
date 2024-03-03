@@ -13,3 +13,4 @@ tomlkit==0.12.3
 typing_extensions==4.9.0
 
 python-stdnum~=1.19
+freezegun~=1.4.0

@@ -7,6 +7,7 @@ from pathlib import Path
 import luhn
 from stdnum import es
 from .hotelreservation import HotelReservation
+from .hotelstay import HotelStay
 from .hotelmanagementexception import HotelManagementException
 
 
@@ -113,16 +114,77 @@ class HotelManager:
 
         # Save to bookings file. Before saving to the file we check that the client does not have another booking...
         path_file_bookings = self.__path_data + "all_bookings.json"
-
         all_bookings = []
         if os.path.isfile(path_file_bookings):
             all_bookings = self.read_data_from_json(path_file_bookings, "r")
-
         for booking in all_bookings:
             if booking["idCard"] == booking_data["idCard"]:
                 raise HotelManagementException("Client already has a reservation")
-
         all_bookings.append(booking_data)
         self.write_data_to_json(path_file_bookings, all_bookings, "w")
 
         return booking_data["localizer"]
+
+    def guest_arrival(self, input_file):
+        """ HM-FR-02: Verify that the localizer was stored in the bookings file and that it still matches the
+                      data so that we know that the data have not been tampered with.
+            HM-FR-02: If previous is ok get an instance of hotel stay and store in stays file """
+
+        # Open input test data file and get data inside (check exists, check json format)...
+        test_data = self.read_data_from_json(input_file, "r")
+        if len(test_data) == 0: # Empty file or json decode error...
+            raise HotelManagementException("Input data file is not a correct json format as expected")
+
+        # File exists and is a valid json but not expected structure (keys)...
+        try:
+            localizer = test_data["Localizer"]
+            id_card = test_data["IdCard"]
+        except KeyError:
+            raise HotelManagementException("Input data file is not a correct json format: incorrect key values")
+
+        # json is ok but data are not valid (localizer or id_card not found in bookings)...
+        all_bookings, booking_data = [], {}
+        found = False
+        path_file_bookings = self.__path_data + "all_bookings.json"
+        if os.path.isfile(path_file_bookings):
+            all_bookings = self.read_data_from_json(path_file_bookings, "r")
+        for booking in all_bookings:
+            if booking["idCard"] == id_card and booking["localizer"] == localizer:
+                found = True
+                booking_data = booking
+                print(booking_data)
+        if not found:
+            raise HotelManagementException("No reservation was found with the provided localizer and id card")
+
+        # Localizer is found but does not re-match data (data have been tampered with)...
+        reservation = HotelReservation(id_card=booking_data["idCard"], credit_card_number=booking_data["creditCardNumber"],
+                                       name_surname=booking_data["nameSurname"], phone_number=booking_data["phoneNumber"],
+                                       room_type=booking_data["roomType"], arrival=booking_data["arrival"], num_days=booking_data["numDays"])
+        if localizer != reservation.localizer:
+            raise HotelManagementException("Localizer does not match data inside bookings file. Data may have been altered")
+
+        # Get HotelStay object. Check if arrival date matches expected arrival date...
+        stay = HotelStay(booking_data["idCard"], localizer, booking_data["numDays"], booking_data["roomType"])
+        arrival_date_in_booking = datetime.strptime(booking_data["arrival"],'%d/%m/%Y')
+        if arrival_date_in_booking != stay.arrival:
+            raise HotelManagementException("Expected arrival date is different than real arrival date")
+
+        # Get hash for the room_key...
+        room_key = stay.room_key
+
+        # Store stay in stays file...
+        path_file_stays = self.__path_data + "all_stays.json"
+
+        all_stays = []
+        if os.path.isfile(path_file_stays):
+            all_stays = self.read_data_from_json(path_file_stays, "r")
+        for stay in all_stays:
+            if stay["idCard"] == booking_data["idCard"]:
+                raise HotelManagementException("Client already has a stay in stays file")
+        stay_json = stay.json
+        stay_json["roomKey"] = room_key
+        all_stays.append(stay_json)
+        self.write_data_to_json(path_file_stays, all_stays, "w")
+
+        # Return room_key...
+        return room_key

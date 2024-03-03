@@ -3,30 +3,30 @@
         "creditCardNumber": "5555555555554444",
         "idCard": "12345678Z",
         "nameSurname": "JOSE LOPEZ",
-        "phoneNumber:": "911234567",
+        "phoneNumber": "911234567",
         "roomType": "SINGLE",
         "arrival": "14/06/2024",
         "numDays": "2",
-        "localizer": "37b8fbcb885bba0ce1e3727161697d0f"
+        "localizer": "3ff517743faae67b33ddefa77163099d"
     },
     {
         "creditCardNumber": "5555555555554444",
         "idCard": "13130023J",
         "nameSurname": "PEPE PEREZ",
-        "phoneNumber:": "911234567",
+        "phoneNumber": "911234567",
         "roomType": "DOUBLE",
         "arrival": "14/06/2024",
         "numDays": "2",
-        "localizer": "bb92772ce43c4acac8839a6aae3d7ab6"
+        "localizer": "a5873426af2a796779344f7ce25009c8"
     },
     {
         "creditCardNumber": "5555555555554444",
         "idCard": "00000001R",
         "nameSurname": "LUCAS BARRIO",
-        "phoneNumber:": "911234567",
+        "phoneNumber": "911234567",
         "roomType": "SUITE",
         "arrival": "14/06/2024",
         "numDays": "2",
-        "localizer": "abc90c4f85db133e5cfc3e0e482aa886"
+        "localizer": "3456311fa06a9a4d139681398525b869"
     }
 ]

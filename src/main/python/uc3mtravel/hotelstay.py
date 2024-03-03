@@ -1,6 +1,6 @@
 """ Module that manages the operations during the stay of a visitor... """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import hashlib
 
 
@@ -16,13 +16,13 @@ class HotelStay:
         self.__arrival = justnow
         # timestamp is represented in seconds.milliseconds
         # to add the number of days we must express it in seconds
-        self.__departure = self.__arrival + (num_days * 24 * 60 * 60)
+        self.__departure = self.__arrival + timedelta(days=int(num_days))
 
     def __signature_string(self):
         """ Composes the string to be used for generating the key for the room """
-        return "{alg:" + self.__alg + ",typ:" + self.__type + ",localizer:" + \
-            self.__localizer + ",arrival:" + self.__arrival + \
-            ",departure:" + self.__departure + "}"
+        arrival = str(self.__arrival)
+        departure = str(self.__departure)
+        return "{alg:" + self.__alg + ",typ:" + self.__type + ",localizer:" + self.__localizer + ",arrival:" + arrival + ",departure:" + departure + "}"
 
     @property
     def idcard(self):
@@ -60,3 +60,13 @@ class HotelStay:
     @departure.setter
     def departure(self, value):
         self.__departure = value
+
+    @property
+    def json(self):
+        return {"alg": self.__alg,
+                "idCard": self.__id_card,
+                "localizer": self.__localizer,
+                "roomType": self.__type,
+                "arrival": str(self.__arrival),
+                "departure": str(self.__departure)
+                }

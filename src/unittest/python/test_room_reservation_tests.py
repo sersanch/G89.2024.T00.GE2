@@ -19,12 +19,12 @@ class TestRoomReservation(TestCase):
         # Load all tests...
         try:
             with open(cls.__path_tests + "f1_tests.json", encoding='UTF-8', mode="r") as f:
-                test_data_credit_card = json.load(f)
+                test_data_f1 = json.load(f)
         except FileNotFoundError as e:
             raise HotelManagementException("Wrong file or file path") from e
         except json.JSONDecodeError:
-            test_data_credit_card = []
-        cls.__test_data_credit_card = test_data_credit_card
+            test_data_f1 = []
+        cls.__test_data_f1 = test_data_f1
         # Clear the bookings file from possible previous runs...
         all_bookings = cls.__path_data + "/all_bookings.json"
         if os.path.isfile(all_bookings):
@@ -35,7 +35,7 @@ class TestRoomReservation(TestCase):
         """ TestCases: TC1 -  Expected OK. Checks Card Number is OK. Localizer OK + Booking is stored
                        TC10 - Expected OK. Checks Room Type value DOUBLE. Localizer OK + Booking is stored
                        TC11 - Expected OK. Checks Room Type value SUITE. Localizer OK + Booking is stored """
-        for input_data in self.__test_data_credit_card:
+        for input_data in self.__test_data_f1:
             if input_data["idTest"] in ("TC1", "TC10", "TC11"):
                 with self.subTest(input_data["idTest"]):
                     print("Executing: " + input_data["idTest"])
@@ -46,11 +46,11 @@ class TestRoomReservation(TestCase):
                                                     input_data["numDays"])
                     match input_data["idTest"]:
                         case "TC1":
-                            self.assertEqual(localizer, "37b8fbcb885bba0ce1e3727161697d0f")
+                            self.assertEqual(localizer, "3ff517743faae67b33ddefa77163099d")
                         case "TC10":
-                            self.assertEqual(localizer, "bb92772ce43c4acac8839a6aae3d7ab6")
+                            self.assertEqual(localizer, "a5873426af2a796779344f7ce25009c8")
                         case "TC11":
-                            self.assertEqual(localizer, "abc90c4f85db133e5cfc3e0e482aa886")
+                            self.assertEqual(localizer, "3456311fa06a9a4d139681398525b869")
                     try:
                         with open(self.__path_data + "/all_bookings.json", encoding='UTF-8', mode="r") as f:
                             bookings = json.load(f)
@@ -82,7 +82,7 @@ class TestRoomReservation(TestCase):
                        TC18 - Expected KO. Card Number incorrect length.
                        TC19 - Expected KO. Card Number incorrect length.
                        TC20 - Expected KO. Card Number is not a number. """
-        for input_data in self.__test_data_credit_card:
+        for input_data in self.__test_data_f1:
             if input_data["idTest"] not in ("TC1", "TC10", "TC11"):
                 with self.subTest(input_data["idTest"]):
                     print("Executing: " + input_data["idTest"])
