@@ -59,3 +59,5 @@
 {"Localizer":"3ff517743faae67b33ddefa77163099d","IdCard":O12345678Z"}
 {"Localizer":"3ff517743faae67b33ddefa77163099d","IdCard":"V"}
 {"Localizer":"3ff517743faae67b33ddefa77163099d","IdCard":"12345678ZE}
+{"Localizer":"a5873426af2a796779344f7ce25009c8","IdCard":"13130023J"}
+{"Localizer":"3456311fa06a9a4d139681398525b869","IdCard":"00000001R"}

@@ -65,23 +65,7 @@ class TestRoomReservation(TestCase):
                     self.assertTrue(booking_found)
 
     def test_room_reservation_tests_ko(self):
-        """ TestCases: TC2 - Expected KO. Card Number not comply luhn.
-                       TC3 - Expected KO. Card Number is not a number.
-                       TC4 - Expected KO. Card Number incorrect length.
-                       TC5 - Expected KO. Card Number incorrect length.
-                       TC6 - Expected KO. Card Number is not a number.
-                       TC7 - Expected KO. Card Number incorrect length.
-                       TC8 - Expected KO. Card Number incorrect length.
-                       TC9 - Expected KO. Card Number is not a number.
-                       TC12 - Expected KO. Card Number incorrect length.
-                       TC13 - Expected KO. Card Number incorrect length.
-                       TC14 - Expected KO. Card Number is not a number.
-                       TC15 - Expected KO. Card Number incorrect length.
-                       TC16 - Expected KO. Card Number incorrect length.
-                       TC17 - Expected KO. Card Number is not a number.
-                       TC18 - Expected KO. Card Number incorrect length.
-                       TC19 - Expected KO. Card Number incorrect length.
-                       TC20 - Expected KO. Card Number is not a number. """
+        """ TestCases: TC2 to TC20 - Expected KO. Different errors. """
         for input_data in self.__test_data_f1:
             if input_data["idTest"] not in ("TC1", "TC10", "TC11"):
                 with self.subTest(input_data["idTest"]):

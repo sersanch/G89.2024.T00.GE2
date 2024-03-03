@@ -7,5 +7,23 @@
         "arrival": "2024-06-14 00:00:00",
         "departure": "2024-06-16 00:00:00",
         "roomKey": "ee25b7b863b77e9106d851875103a3076748a0d487e7a42340ea18855d36b89f"
+    },
+    {
+        "alg": "SHA-256",
+        "idCard": "13130023J",
+        "localizer": "a5873426af2a796779344f7ce25009c8",
+        "roomType": "DOUBLE",
+        "arrival": "2024-06-14 00:00:00",
+        "departure": "2024-06-16 00:00:00",
+        "roomKey": "6cfe66d06630a99766b9fb87c5a09f4707d60a95212a45c1edd2c6fba334c2c0"
+    },
+    {
+        "alg": "SHA-256",
+        "idCard": "00000001R",
+        "localizer": "3456311fa06a9a4d139681398525b869",
+        "roomType": "SUITE",
+        "arrival": "2024-06-14 00:00:00",
+        "departure": "2024-06-16 00:00:00",
+        "roomKey": "8dd164818a021e709aec4ed512be4318b16d3fc94c78579271e91a1991db870e"
     }
 ]

@@ -152,7 +152,6 @@ class HotelManager:
             if booking["idCard"] == id_card and booking["localizer"] == localizer:
                 found = True
                 booking_data = booking
-                print(booking_data)
         if not found:
             raise HotelManagementException("No reservation was found with the provided localizer and id card")
 
@@ -178,8 +177,8 @@ class HotelManager:
         all_stays = []
         if os.path.isfile(path_file_stays):
             all_stays = self.read_data_from_json(path_file_stays, "r")
-        for stay in all_stays:
-            if stay["idCard"] == booking_data["idCard"]:
+        for previous_stay in all_stays:
+            if previous_stay["idCard"] == booking_data["idCard"]:
                 raise HotelManagementException("Client already has a stay in stays file")
         stay_json = stay.json
         stay_json["roomKey"] = room_key
