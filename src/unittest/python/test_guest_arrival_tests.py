@@ -1,4 +1,5 @@
 """ Module that includes the tests of GE2.2 - Function 2 - Guest Arrival """
+import hashlib
 import unittest
 import os.path
 import json
@@ -28,7 +29,7 @@ class TestGuestArrival(unittest.TestCase):
             raise HotelManagementException("Wrong file or file path") from e
         cls.__test_data_f2 = lines
         # Clear the stays file from possible previous runs...
-        all_stays = cls.__path_data + "/all_stays.json"
+        all_stays = cls.__path_data + "all_stays.json"
         if os.path.isfile(all_stays):
             os.remove(all_stays)
         return True
@@ -57,7 +58,7 @@ class TestGuestArrival(unittest.TestCase):
                         case "TC63":
                             self.assertEqual(room_key, "8dd164818a021e709aec4ed512be4318b16d3fc94c78579271e91a1991db870e")
                     try:
-                        with open(self.__path_data + "/all_stays.json", encoding='UTF-8', mode="r") as f:
+                        with open(self.__path_data + "all_stays.json", encoding='UTF-8', mode="r") as f:
                             stays = json.load(f)
                     except FileNotFoundError as e:
                         raise HotelManagementException("Wrong file or file path") from e
@@ -69,10 +70,20 @@ class TestGuestArrival(unittest.TestCase):
                             stay_found = True
                     self.assertTrue(stay_found)
 
+    def get_store_hash(self):
+        """ Gets md5 hash for the stays store... """
+        try:
+            with open(self.__path_data + "all_stays.json", encoding='UTF-8', mode="r") as f:
+                file_hash = hashlib.md5(f.__str__().encode()).hexdigest()
+        except FileNotFoundError:
+            file_hash = ""
+        return file_hash
+
     def test_guest_arrival_tests_ko(self):
         """ TestCases: TC2 to TC23 -  Expected KO. Deletion of nodes...
                        TC24 to TC45 - Expected KO. Duplication of nodes...
                        TC46 to TC61 - Expected KO. Modification of nodes... """
+        store_original_hash = self.get_store_hash()
         for index, input_data in enumerate(self.__test_data_f2):
             if index + 1 not in [1, 62, 63]:  # TC1 is the first in the file and only one ok...
                 test_id = "TC" + str(index + 1)
@@ -89,3 +100,5 @@ class TestGuestArrival(unittest.TestCase):
                             self.assertEqual(result.exception.message, "Input data file is not a correct json format: incorrect key values")
                         if test_id in ["TC16", "TC22", "TC38", "TC44", "TC54", "TC60"]:
                             self.assertEqual(result.exception.message, "No reservation was found with the provided localizer and id card")
+        store_final_hash = self.get_store_hash()
+        self.assertEqual(store_final_hash, store_original_hash)

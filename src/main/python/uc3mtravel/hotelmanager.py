@@ -130,15 +130,15 @@ class HotelManager:
                       data so that we know that the data have not been tampered with.
             HM-FR-02: If previous is ok get an instance of hotel stay and store in stays file """
 
-        # Open input test data file and get data inside (check exists, check json format)...
-        test_data = self.read_data_from_json(input_file, "r")
-        if len(test_data) == 0: # Empty file or json decode error...
+        # Open input file and get data inside (check exists, check json format)...
+        input_data = self.read_data_from_json(input_file, "r")
+        if len(input_data) == 0:
             raise HotelManagementException("Input data file is not a correct json format as expected")
 
         # File exists and is a valid json but not expected structure (keys)...
         try:
-            localizer = test_data["Localizer"]
-            id_card = test_data["IdCard"]
+            localizer = input_data["Localizer"]
+            id_card = input_data["IdCard"]
         except KeyError:
             raise HotelManagementException("Input data file is not a correct json format: incorrect key values")
 
