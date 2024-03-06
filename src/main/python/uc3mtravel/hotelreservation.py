@@ -1,7 +1,5 @@
 """ Module that manages the operations for hotel booking transactions... """
 import hashlib
-from datetime import datetime
-
 
 class HotelReservation:
     """ Class that manages the operations for hotel booking transactions... """
@@ -55,6 +53,7 @@ class HotelReservation:
 
     @property
     def json(self):
+        """ Returns class info un json format... """
         return {"creditCardNumber": self.__credit_card_number,
                 "idCard": self.__id_card,
                 "nameSurname": self.__name_surname,

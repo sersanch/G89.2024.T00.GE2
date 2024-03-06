@@ -63,6 +63,7 @@ class HotelStay:
 
     @property
     def json(self):
+        """ Returns class info in json format..."""
         return {"alg": self.__alg,
                 "idCard": self.__id_card,
                 "localizer": self.__localizer,

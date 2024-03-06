@@ -31,6 +31,14 @@ class TestRoomReservation(TestCase):
             os.remove(all_bookings)
         return True
 
+    @classmethod
+    def tearDownClass(cls):
+        """ Deletes tmp file created during tests... """
+        tmp = cls.__path_data + "/tests/tmp_test_data.json"
+        if os.path.isfile(tmp):
+            os.remove(tmp)
+        return True
+
     def test_room_reservation_tests_ok(self):
         """ TestCases: TC1 -  Expected OK. Checks Card Number is OK. Localizer OK + Booking is stored
                        TC10 - Expected OK. Checks Room Type value DOUBLE. Localizer OK + Booking is stored

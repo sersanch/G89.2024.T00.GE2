@@ -92,7 +92,7 @@ class TestGuestArrival(unittest.TestCase):
                     self.generate_tmp_test_data_file(input_data)
                     hm = HotelManager()
                     with self.assertRaises(HotelManagementException) as result:
-                        room_key = hm.guest_arrival(self.__path_tests + self.__tmp_test_data_file)
+                        hm.guest_arrival(self.__path_tests + self.__tmp_test_data_file)
                         # Not all invalid tests will raise json format error because error may be in data or labels...
                         if test_id not in ["TC1", "TC62", "TC63", "TC13", "TC16", "TC19", "TC22", "TC35", "TC38", "TC41", "TC44", "TC51", "TC54", "TC57", "TC60"]:
                             self.assertEqual(result.exception.message, "Input data file is not a correct json format as expected")
