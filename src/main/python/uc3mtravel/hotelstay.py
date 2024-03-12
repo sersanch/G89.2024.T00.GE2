@@ -19,7 +19,7 @@ class HotelStay:
         self.__departure = self.__arrival + timedelta(days=int(num_days))
 
     def __signature_string(self):
-        """ Composes the string to be used for generating the key for the room """
+        """ Composes the string to be used to generate the room keys """
         arrival = str(self.__arrival)
         departure = str(self.__departure)
         return "{alg:" + self.__alg + ",typ:" + self.__type + ",localizer:" + self.__localizer + ",arrival:" + arrival + ",departure:" + departure + "}"

@@ -76,8 +76,8 @@ class HotelManager:
             Date of arrival at the hotel, in the format "DD/MM/YYYY" (example (01/07/2024) """
         try:
             datetime.strptime(arrival, '%d/%m/%Y')
-        except ValueError:
-            raise HotelManagementException("Invalid arrival date provided (format must be dd/mm/yyyy")
+        except ValueError as exc:
+            raise HotelManagementException("Invalid arrival date provided (format must be dd/mm/yyyy") from exc
 
     def validate_num_days(self, num_days):
         """ Validates the arrival date. A value between 1 and 10 """
@@ -139,8 +139,8 @@ class HotelManager:
         try:
             localizer = input_data["Localizer"]
             id_card = input_data["IdCard"]
-        except KeyError:
-            raise HotelManagementException("Input data file is not a correct json format: incorrect key values")
+        except KeyError as exc:
+            raise HotelManagementException("Input data file is not a correct json format: incorrect key values") from exc
 
         # json is ok but data are not valid (localizer or id_card not found in bookings)...
         all_bookings, booking_data = [], {}
@@ -187,3 +187,42 @@ class HotelManager:
 
         # Return room_key...
         return room_key
+
+    def guest_checkout(self, room_key):
+        """ HM-FR-03: The system will record when the client leaves the room.
+                      It will also check that the room code is correct and that the departure day is as scheduled
+                      (we will assume that the guest can only leave the hotel on the scheduled date).
+                      Finally, it will record the output in a file. """
+
+        # Check key format is valid for a SHA256...
+        pattern = r'^[0-9a-fA-F]{64}$'
+        if not bool(re.match(pattern, room_key)):
+            raise HotelManagementException("Given SHA256 room_key code is not a valid SHA256 string")
+
+        # Check if the room_key is in the stays file...
+        all_stays = self.read_data_from_json(self.__path_data + "all_stays.json", "r")
+        found = False
+        for stay in all_stays:
+            if stay["room_key"] == room_key:
+                found = True
+                expected_departure_date = stay["departure"]
+        if not found:
+            raise HotelManagementException("Given room_key not found in stays file")
+
+        # Check if "today" is the correct departure date...
+        timestamp = datetime.timestamp(datetime.utcnow())
+        if timestamp != expected_departure_date:
+            raise HotelManagementException("The departure date was not expected to be today according to the stay information")
+
+        # Store checkout information in checkouts file (timestamp + room_key)...
+        path_file_checkouts = self.__path_data + "all_checkouts.json"
+        all_checkouts = []
+        if os.path.isfile(path_file_checkouts):
+            all_checkouts = self.read_data_from_json(path_file_checkouts, "r")
+        for previous_checkout in all_checkouts:
+            if previous_checkout["roomKey"] == room_key:
+                raise HotelManagementException("Client already found in checkouts file. Not allowed to checkout again")
+        checkout_json = {"roomKey": room_key, "realDeparture": timestamp}
+        all_checkouts.append(checkout_json)
+        self.write_data_to_json(path_file_checkouts, all_stays, "w")
+        return True
