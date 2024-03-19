@@ -203,9 +203,10 @@ class HotelManager:
         all_stays = self.read_data_from_json(self.__path_data + "all_stays.json", "r")
         found = False
         for stay in all_stays:
-            if stay["room_key"] == room_key:
+            if stay["roomKey"] == room_key:
                 found = True
-                expected_departure_date = stay["departure"]
+                expected_departure_date = datetime.strptime(stay["departure"], '%Y-%m-%d %H:%M:%S')
+                expected_departure_date = datetime.timestamp(expected_departure_date)
         if not found:
             raise HotelManagementException("Given room_key not found in stays file")
 
@@ -224,5 +225,5 @@ class HotelManager:
                 raise HotelManagementException("Client already found in checkouts file. Not allowed to checkout again")
         checkout_json = {"roomKey": room_key, "realDeparture": timestamp}
         all_checkouts.append(checkout_json)
-        self.write_data_to_json(path_file_checkouts, all_stays, "w")
+        self.write_data_to_json(path_file_checkouts, all_checkouts, "w")
         return True
