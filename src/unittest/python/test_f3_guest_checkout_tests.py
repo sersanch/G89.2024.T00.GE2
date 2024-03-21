@@ -58,9 +58,19 @@ class TestGuestCheckout(unittest.TestCase):
                             checkout_found = True
                     self.assertTrue(checkout_found)
 
+    def get_store_hash(self):
+        """ Gets md5 hash for the stays store... """
+        try:
+            with open(self.__path_data + "all_checkouts.json", encoding='UTF-8', mode="r") as f:
+                file_hash = hashlib.md5(f.__str__().encode()).hexdigest()
+        except FileNotFoundError:
+            file_hash = ""
+        return file_hash
+
     @freeze_time("2024-06-16")
     def test_guest_checkout_tests_ko(self):
         """ TestCases KO: TC1, TC2, TC3, TC4, TC7... """
+        store_original_hash = self.get_store_hash()
         for index, input_data in enumerate(self.__test_data_f3):
             if index + 1 not in [5, 6, 8]:  # The ones ok...
                 test_id = "TC" + str(index + 1)
@@ -90,5 +100,5 @@ class TestGuestCheckout(unittest.TestCase):
                         freeze_time().stop()
                     if test_id in ["TC7"]:
                         self.assertEqual(result.exception.message, "Client already found in checkouts file. Not allowed to checkout again")
-        #store_final_hash = self.get_store_hash()
-        #self.assertEqual(store_final_hash, store_original_hash)
+        store_final_hash = self.get_store_hash()
+        self.assertEqual(store_final_hash, store_original_hash)
